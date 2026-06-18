@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Guia da Aventura — Crônica do Aventureiro</title>
+  <meta name="description" content="Um chatbot RPG narrativo onde você é o aventureiro e Eldwin, o Guia, conduz sua jornada." />
+
+  <!-- Fontes: Cinzel Decorative (épica), Cormorant Garamond (narrativa), Space Mono (input rúnico) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Fundo animado com brasas flutuantes -->
+  <div class="ember-field" id="emberField" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- Modal de início -->
+  <div class="overlay" id="introOverlay" data-testid="intro-overlay">
+    <div class="intro-card">
+      <div class="rune-frame">
+        <i class="fa-solid fa-dragon rune-icon"></i>
+      </div>
+      <h1 class="title">Guia da Aventura</h1>
+      <p class="subtitle">Crônica do Aventureiro</p>
+      <p class="intro-text">
+        Nas terras esquecidas onde lendas ainda respiram,<br/>
+        um chamado ecoa. Eldwin, o Sábio Errante, aguarda...
+      </p>
+      <button class="cta" id="startBtn" data-testid="start-btn">
+        <span>Iniciar Jornada</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <div class="audio-toggle-row">
+        <button class="ghost-btn" id="audioToggle" data-testid="audio-toggle">
+          <i class="fa-solid fa-volume-high"></i> Som: <span id="audioState">Ligado</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- App principal -->
+  <main class="app" id="app" aria-hidden="true">
+    <!-- Header com status do aventureiro -->
+    <header class="hud">
+      <div class="hud-left">
+        <div class="sigil"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="hud-meta">
+          <div class="hud-name" id="heroName" data-testid="hero-name">Aventureiro</div>
+          <div class="hud-class" id="heroClass" data-testid="hero-class">Sem classe</div>
+        </div>
+      </div>
+
+      <div class="hud-center">
+        <div class="quest-label">Missão Atual</div>
+        <div class="quest-title" id="questTitle" data-testid="quest-title">— A Convocação —</div>
+      </div>
+
+      <div class="hud-right">
+        <div class="level-pill">
+          Nível <strong id="levelValue" data-testid="level-value">1</strong>
+        </div>
+        <div class="xp-wrap">
+          <div class="xp-track"><div class="xp-fill" id="xpFill" data-testid="xp-fill"></div></div>
+          <div class="xp-text"><span id="progressStep" data-testid="progress-step">0</span> / 4 missões</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Área de chat -->
+    <section class="chat-section">
+      <div class="chat-window" id="chatWindow" role="log" aria-live="polite" data-testid="chat-window">
+        <!-- Mensagens injetadas via JS -->
+      </div>
+    </section>
+
+    <!-- Sugestões de resposta (aparece quando há escolhas) -->
+    <div class="suggestions" id="suggestions" data-testid="suggestions" aria-hidden="true"></div>
+
+    <!-- Caixa de input -->
+    <footer class="composer">
+      <div class="input-wrap">
+        <i class="fa-solid fa-feather-pointed input-icon" aria-hidden="true"></i>
+        <input
+          type="text"
+          id="userInput"
+          placeholder="Escreva sua resposta no pergaminho..."
+          autocomplete="off"
+          maxlength="240"
+          data-testid="user-input"
+        />
+        <button id="sendBtn" class="send-btn" data-testid="send-btn" aria-label="Enviar mensagem">
+          <i class="fa-solid fa-scroll"></i>
+        </button>
+      </div>
+      <div class="hint">Dica: descreva, escolha um caminho ou responda livremente. O Guia ouve tudo.</div>
+    </footer>
+  </main>
+
+  <!-- Modal de fim de jornada -->
+  <div class="overlay hidden" id="endingOverlay" data-testid="ending-overlay">
+    <div class="ending-card">
+      <div class="ending-glyph" id="endingGlyph"><i class="fa-solid fa-crown"></i></div>
+      <div class="ending-tag" id="endingTag">Final</div>
+      <h2 class="ending-title" id="endingTitle">A Lenda do Aventureiro</h2>
+      <p class="ending-body" id="endingBody"></p>
+      <div class="ending-actions">
+        <button class="cta" id="restartBtn" data-testid="restart-btn">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span>Recomeçar a Crônica</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
